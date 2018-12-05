@@ -63,7 +63,7 @@ def im():
 
 def var():
     """
-    特征选择-删除低方差特征
+    特征选择--删除低方差特征
     :return: None
     """
     var = VarianceThreshold(threshold=1.0)
@@ -76,7 +76,7 @@ def var():
 
 def pca():
     """
-    主成分分析，进行特征降维
+    主成分分析--进行特征降维
     :return: None
     """
     pca = PCA(n_components=0.9)
