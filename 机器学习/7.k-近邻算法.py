@@ -6,8 +6,9 @@
 
 # k近邻算法，相似的样本，特征之间的值应该都是相近的。需要做标准化处理！
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
+
 import pandas as pd
 
 
@@ -63,16 +64,33 @@ def knncls():
     x_test = std.transform(x_test)
 
     # 算法流程
-    knn = KNeighborsClassifier(n_neighbors=5)
+    # knn = KNeighborsClassifier(n_neighbors=5)
+    knn = KNeighborsClassifier()
 
-    # fit
-    knn.fit(x_train, y_train)
+    # # fit
+    # knn.fit(x_train, y_train)
+    #
+    # # 得出预测结果
+    # y_predict = knn.predict(x_test)
+    # print('预测目标签到位置为：', y_predict)
+    # # 得出准确率
+    # print('预测准确率：', knn.score(x_test, y_test))
 
-    # 得出预测结果
-    y_predict = knn.predict(x_test)
-    print('预测目标签到位置为：', y_predict)
-    # 得出准确率
-    print('预测准确率：', knn.score(x_test, y_test))
+
+    # 构造一些参数进行搜索
+    param = {'n_neighbors':[3,5,10]}
+
+    # 进行网格搜索
+    gc = GridSearchCV(knn, param_grid=param, cv = 2)  # cv几折
+
+    gc.fit(x_train, y_train)
+
+    # 预测准确率
+    score = gc.score(x_test, y_test)
+    print('在测试机上准确率：', score)
+    print('在交叉验证中最好的结果：', gc.best_score_)
+    print('最好的模型是：', gc.best_estimator_)
+    print('每个超参数每次交叉验证的结果：', gc.cv_results_)
 
     return None
 
