@@ -5,7 +5,7 @@
 # software: PyCharm
 
 from sklearn.datasets import load_boston
-from sklearn.linear_model import LinearRegression, SGDRegressor
+from sklearn.linear_model import LinearRegression, SGDRegressor, Ridge
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
@@ -49,13 +49,25 @@ def mylinear():
     sgd.fit(x_train, y_train)
     print(sgd.coef_)
     # 预测测试集房价价格
-    y_std_predict = sgd.predict(x_test)
-    y_std_predict = std_y.inverse_transform(y_std_predict)
+    y_sgd_predict = sgd.predict(x_test)
+    y_sgd_predict = std_y.inverse_transform(y_sgd_predict)
+    # print('每个测试集的预测结果：', y_predict)
+
+
+    # 岭回归进行房价预测
+    rd = Ridge(alpha=1.0)  # 超参数，网格搜索，0~1， 1~10
+    rd.fit(x_train, y_train)
+    print(rd.coef_)
+    # 预测测试集房价价格
+    y_rd_predict = rd.predict(x_test)
+    y_rd_predict = std_y.inverse_transform(y_rd_predict)
     # print('每个测试集的预测结果：', y_predict)
 
     print('正规方程的均方误差：', mean_squared_error(std_y.inverse_transform(y_test), y_lr_predict))
 
-    print('梯度下降的均方误差：', mean_squared_error(std_y.inverse_transform(y_test), y_std_predict))
+    print('梯度下降的均方误差：', mean_squared_error(std_y.inverse_transform(y_test), y_sgd_predict))
+
+    print('岭回归的均方误差：', mean_squared_error(std_y.inverse_transform(y_test), y_rd_predict))
 
     return None
 
