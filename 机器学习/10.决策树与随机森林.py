@@ -66,9 +66,11 @@ def decision():
     print('预测准确率：', score)
 
     # 导出决策树结构，graphviz工具dot -Tpng tree.dot -o tree.png 生成p决策树ng
-    export_graphviz(dec, out_file='./tree.dot', feature_names=['年龄', 'pclass=1st', 'pclass=2nd', 'pclass=3rd', '女性', '男性'])
+    export_graphviz(dec, out_file='./tree.dot',
+                    feature_names=['年龄', 'pclass=1st', 'pclass=2nd', 'pclass=3rd', '女性', '男性'])
 
     return None
+
 
 # 集成学习方法
 # 随机森林单个数生成过程：随机在N个样本红选择样本，重复N次，样本可能重复；随机在M个特征中选出m个特征
@@ -128,7 +130,7 @@ def trees():
     # 随机森林进行预测（超参数调优）
     rf = RandomForestClassifier()
 
-    param = {'n_estimators': [100,200,300,500,800,1200], 'max_depth': [5,8,15,25,30]}
+    param = {'n_estimators': [100, 200, 300, 500, 800, 1200], 'max_depth': [5, 8, 15, 25, 30]}
     # 网格搜索与交叉验证
     gc = GridSearchCV(rf, param_grid=param, cv=2)
 
@@ -138,11 +140,7 @@ def trees():
 
     print('最优模型参数', gc.best_params_)
 
-
-
-
     return None
-
 
 
 if __name__ == '__main__':
