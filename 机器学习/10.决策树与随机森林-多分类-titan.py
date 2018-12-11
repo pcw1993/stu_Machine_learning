@@ -103,7 +103,7 @@ def trees():
     x['age'].fillna(x['age'].mean(), inplace=True)
     # print(x)
 
-    # 分割训练街，测试集
+    # 分割训练集，测试集
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
 
     # 进行处理,特征工程，特征，类别，one-hot编码

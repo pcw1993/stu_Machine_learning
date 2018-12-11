@@ -55,6 +55,10 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # 对于静态形状来说，一旦张量形状固定了，不能再次设置静态形状
 # 动态形状可以去创建一个新的张量,改变时一定要注意元素数量要匹配
 
+# 可视化
+# SCALARS, GRAPHS, HISTOGRAMS
+# 0维度，准确率损失；显示程序的结构；高纬度的值，权重，偏置
+
 plt = tf.placeholder(tf.float32, [None, 2])
 
 print(plt)
@@ -69,3 +73,5 @@ print(plt_reshape)
 
 with tf.Session() as sess:
     pass
+
+tf.concat()  # 合并
